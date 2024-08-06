@@ -1,0 +1,26 @@
+{
+  "404": {
+    "oops": "OOPS!",
+    "message": "Please check that the URL you entered is correct."
+  },
+  "Router": {
+    "Login": "Login",
+    "Dashboard": "Dashboard",
+    "Example": "Example",
+    "Form": "Form",
+    "Table": "Table"
+  },
+  "Menu": {
+    "Title": "Example Template"
+  },
+  "LoginView": {
+    "Title": "Task Admin Console",
+    "Lang": "language",
+    "Account": "Account",
+    "Password": "Password",
+    "ErrorAccount": "Pleace enter account",
+    "ErrorPassword": "Pleace enter password",
+    "Login": "Login",
+    "Clear": "Clear"
+  }
+}

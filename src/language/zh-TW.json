@@ -1,0 +1,26 @@
+{
+  "404": {
+    "oops": "噢不!",
+    "message": "請檢查您輸入的網址是否正確。"
+  },
+  "Router": {
+    "Login": "登入",
+    "Dashboard": "首頁",
+    "Example": "範例",
+    "Form": "表單",
+    "Table": "表格"
+  },
+  "Menu": {
+    "Title": "範例樣板"
+  },
+  "LoginView": {
+    "Title": "任務管理後台",
+    "Lang": "語系",
+    "Account": "帳號",
+    "Password": "密碼",
+    "ErrorAccount": "請輸入帳號",
+    "ErrorPassword": "請輸入密碼",
+    "Login": "登入",
+    "Clear": "清除"
+  }
+}
