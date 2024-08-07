@@ -1,4 +1,5 @@
 {
+  "AxiosCatchError": "呼叫API錯誤",
   "404": {
     "oops": "噢不!",
     "message": "請檢查您輸入的網址是否正確。"

@@ -1,4 +1,5 @@
 {
+  "AxiosCatchError": "Call Api Error",
   "404": {
     "oops": "OOPS!",
     "message": "Please check that the URL you entered is correct."

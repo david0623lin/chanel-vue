@@ -6,6 +6,7 @@
                 <label class="form-label">{{ $t("LoginView.Lang") }}</label>
                 <Lang class="lang-select" />
             </div>
+            <AlertComponent ref="alertRef" />
             <form @submit.prevent="handleLogin" novalidate>
                 <div class="mb-3">
                     <input type="text" class="form-control" :class="{ 'is-invalid': errors.Account }" id="Account"
@@ -29,10 +30,13 @@
 
 <script setup>
 import { ref } from "vue";
+import AlertComponent from "@/components/AlertComponent.vue";
 import Lang from "@/components/LangComponent.vue";
 import { useI18n } from 'vue-i18n';
 import axiosInstance from '@/utils/api';
+import { useTokenStore } from '@/utils/pinia/StoreToken';
 
+const tokenStore = useTokenStore();
 const { t } = useI18n(); // 語系
 
 const form = ref({
@@ -51,17 +55,26 @@ const validateForm = () => {
     return !errors.value.Account && !errors.value.Password;
 };
 
+const alertRef = ref(null);
+
 const handleLogin = () => {
     if (!validateForm()) {
-        return
+        return;
     }
-
     axiosInstance.post('/admin/login', form.value)
         .then(response => {
-            console.log(response.data);
+            if (response.data.Code === 0) {
+                tokenStore.setSid(response.data.Result.Sid);
+                tokenStore.setWid(response.data.Result.Wid);
+                alertRef.value.showAlert(response.data.Message, 'success');
+                // 轉導
+            } else {
+                alertRef.value.showAlert(response.data.Message, 'danger');
+            }
         })
         .catch(error => {
             console.error('Request Error:', error);
+            alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
         });
 };
 
