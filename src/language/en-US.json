@@ -2,7 +2,7 @@
   "AxiosCatchError": "Call Api Error",
   "Router": {
     "Login": "Login",
-    "Home": "Test",
+    "Home": "Home",
     "Task": "Task Manage"
   },
   "LoginView": {
@@ -24,8 +24,6 @@
       "Status": "Status",
       "Method": "Method",
       "Path": "Api Path",
-      "Submit": "Search",
-      "Clear": "Clear",
       "Select": "Please Select",
       "SelectStatus": {
         "NoRun": "No Run",
@@ -53,10 +51,15 @@
       "Remark": "Remark",
       "CreateTime": "Create Time",
       "UpdateTime": "Update Time",
-      "Btn": {
-        "Operate": "Operate",
-        "Detail": "Detail"
-      }
+      "Operate": "Operate"
+    },
+    "Btn": {
+      "Submit": "Search",
+      "Clear": "Clear",
+      "Detail": "Detail",
+      "Create": "Create",
+      "Update": "Update",
+      "Delete": "Delete"
     }
   }
 }

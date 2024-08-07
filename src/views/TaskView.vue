@@ -43,9 +43,13 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="submit-button">{{ $t("TaskView.SearchItem.Submit") }}</button>
-                    <button type="button" class="clear-button" @click="handleClear">{{ $t("TaskView.SearchItem.Clear")
-                        }}</button>
+                    <button type="submit" class="btn btn-primary">{{ $t("TaskView.Btn.Submit") }}</button>
+                    <button type="button" class="btn btn-secondary" @click="handleClear">
+                        {{ $t("TaskView.Btn.Clear") }}
+                    </button>
+                    <button type="button" class="btn btn-success" @click="showModal">
+                        {{ $t("TaskView.Btn.Create") }}
+                    </button>
                 </div>
             </div>
         </form>
@@ -68,7 +72,7 @@
                     <th>{{ $t("TaskView.SearchResult.Remark") }}</th>
                     <th>{{ $t("TaskView.SearchResult.CreateTime") }}</th>
                     <th>{{ $t("TaskView.SearchResult.UpdateTime") }}</th>
-                    <th>{{ $t("TaskView.SearchResult.Btn.Operate") }}</th>
+                    <th>{{ $t("TaskView.SearchResult.Operate") }}</th>
                 </tr>
             </thead>
             <tbody v-if="results.length > 0">
@@ -89,23 +93,40 @@
                     <td>{{ formatTimestamp(result.UpdateTime) }}</td>
                     <td>
                         <button type="button" class="btn btn-outline-primary" @click="handleClear">{{
-                            $t("TaskView.SearchResult.Btn.Detail") }}</button>
+                            $t("TaskView.Btn.Detail") }}
+                        </button>
+                        <button type="button" class="btn btn-outline-warning" @click="handleClear">{{
+                            $t("TaskView.Btn.Update") }}
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" @click="handleClear">{{
+                            $t("TaskView.Btn.Delete") }}
+                        </button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <ModalComponent :title="'新增項目'" :submitText="'送出'" :cancelText="'取消'" :isVisible="isModalVisible"
+        @close="isModalVisible = false" @submit="handleModalSubmit">
+        <form>
+            <div class="form-group">
+                <label for="new-item">新項目</label>
+                <input type="text" id="new-item" v-model="newItem" />
+            </div>
+        </form>
+    </ModalComponent>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axiosInstance from '@/utils/api'
 import AlertComponent from '@/components/AlertComponent.vue';
+import ModalComponent from '@/components/ModalComponent.vue';
+import axiosInstance from '@/utils/api'
 import { formatTimestamp, convertToTimestamp, getTodayRange } from '@/utils/tools/time'
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n(); // 語系
-
 const alertRef = ref(null);
 
 onMounted(() => {
@@ -125,7 +146,7 @@ const form = ref({
 const results = ref([]);
 
 const methodMap = ref({
-    GET: "badge rounded-pill bg-primary",
+    GET: "badge rounded-pill bg-info",
     POST: "badge rounded-pill bg-success",
     PUT: "badge rounded-pill bg-warning",
     DELETE: "badge rounded-pill bg-danger",
@@ -160,6 +181,20 @@ function handleClear() {
     form.value.Method = '';
     form.value.Path = '';
 }
+
+const isModalVisible = ref(false);
+const newItem = ref('');
+
+function showModal() {
+    isModalVisible.value = true;
+}
+
+function handleModalSubmit() {
+    // 在這裡處理新增表單提交邏輯
+    console.log("New item:", newItem.value);
+    isModalVisible.value = false;
+}
+
 </script>
 
 <style scoped>
@@ -189,8 +224,7 @@ label {
     margin-bottom: 5px;
 }
 
-input,
-select {
+input {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
@@ -198,29 +232,21 @@ select {
     border-radius: 4px;
 }
 
-button.submit-button,
-button.clear-button {
+select {
+    width: 100%;
     padding: 10px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-    cursor: pointer;
-    width: auto;
-    margin-top: 27px;
 }
 
-button.clear-button {
-    background-color: #6c757d;
-    margin-left: 10px;
+.form-group .btn {
+    margin-top: 28px;
+    margin-left: 5px;
 }
 
-button.submit-button:hover {
-    background-color: #0056b3;
-}
-
-button.clear-button:hover {
-    background-color: #5a6268;
+td .btn {
+    margin-left: 5px;
 }
 
 /* 新增表格样式 */

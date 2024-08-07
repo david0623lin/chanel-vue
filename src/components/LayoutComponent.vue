@@ -32,12 +32,31 @@
         <nav class="sidebar bg-dark text-light">
             <ul class="nav flex-column">
                 <li v-for="route in routes" :key="route.path" class="nav-item">
-                    <router-link :to="route.path" class="nav-link text-light">
+                    <router-link :to="route.path" class="nav-link text-light" v-if="!route.children">
                         <div class="icon-wrapper">
-                            <img src="/src/assets/feather/airplay.svg" alt="" width="30" height="24">
+                            <img :src="route.meta.icon" alt="" width="30" height="24">
                         </div>
                         {{ $t("Router." + route.name) }}
                     </router-link>
+                    <div v-if="route.children">
+                        <button class="nav-link text-light" @click="toggleSubMenu(route.path)">
+                            <div class="icon-wrapper">
+                                <img :src="route.meta.icon" alt="" width="30" height="24">
+                            </div>
+                            {{ $t("Router." + route.name) }}
+                            <span class="toggle-icon">{{ openMenus.includes(route.path) ? '−' : '+' }}</span>
+                        </button>
+                        <ul v-show="openMenus.includes(route.path)" class="nav flex-column ms-3">
+                            <li v-for="child in route.children" :key="child.path" class="nav-item">
+                                <router-link :to="child.path" class="nav-link text-light">
+                                    <div class="icon-wrapper">
+                                        <img :src="child.meta.icon" alt="" width="30" height="24">
+                                    </div>
+                                    {{ $t("Router." + child.name) }}
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -49,7 +68,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -57,6 +76,18 @@ const router = useRouter();
 const routes = computed(() => {
     return router.options.routes.filter(route => route.name && route.path !== '/');
 });
+
+const openMenus = ref([]);
+
+function toggleSubMenu(path) {
+    const index = openMenus.value.indexOf(path);
+
+    if (index === -1) {
+        openMenus.value.push(path);
+    } else {
+        openMenus.value.splice(index, 1);
+    }
+}
 
 </script>
 

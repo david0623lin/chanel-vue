@@ -35,7 +35,9 @@ import Lang from "@/components/LangComponent.vue";
 import { useI18n } from 'vue-i18n';
 import axiosInstance from '@/utils/api';
 import { useTokenStore } from '@/utils/pinia/StoreToken';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const tokenStore = useTokenStore();
 const { t } = useI18n(); // 語系
 
@@ -67,6 +69,7 @@ const handleLogin = () => {
             tokenStore.setWid(response.data.Result.Wid);
             alertRef.value.showAlert(response.data.Message, 'success');
             // 轉導
+            router.push({ path: '/home' });
         } else {
             alertRef.value.showAlert(response.data.Message, 'danger');
         }

@@ -12,30 +12,44 @@ const router = createRouter({
     {
       path: '/home',
       name: 'Home',
-      meta: { 
-        title: '首頁',
-      },
       component: LayoutComponent,
+      meta: {
+        icon: '/src/assets/feather/airplay.svg'
+      },
       children: [
         {
-          path: '',
-          name: '',
-          component: () => import("@/views/HomePage.vue")
+          path: '/home',
+          name: 'Home',
+          component: () => import("@/views/HomePage.vue"),
+          meta: {
+            icon: '/src/assets/feather/airplay.svg'
+          }
         },
       ],
     },
     {
       path: '/task',
       name: 'Task',
-      meta: { 
-        title: '任務管理',
-      },
       component: LayoutComponent,
+      meta: {
+        icon: '/src/assets/feather/airplay.svg'
+      },
       children: [
         {
-          path: '',
-          name: '',
-          component: () => import("@/views/TaskView.vue")
+          path: '/task/manage',
+          name: 'TaskManage',
+          component: () => import("@/views/TaskView.vue"),
+          meta: {
+            icon: '/src/assets/feather/airplay.svg'
+          }
+        },
+        {
+          path: '/task/create',
+          name: 'TaskCreate',
+          component: () => import("@/views/HomePage.vue"),
+          meta: {
+            icon: '/src/assets/feather/airplay.svg'
+          }
         },
       ],
     },

@@ -2,8 +2,10 @@
   "AxiosCatchError": "呼叫API錯誤",
   "Router": {
     "Login": "登入",
-    "Home": "測試",
-    "Task": "任務管理"
+    "Home": "首頁",
+    "Task": "任務",
+    "TaskManage": "任務管理",
+    "TaskCreate": "任務新增"
   },
   "LoginView": {
     "Title": "任務管理後台",
@@ -24,8 +26,6 @@
       "Status": "狀態",
       "Method": "方法",
       "Path": "路徑",
-      "Submit": "搜尋",
-      "Clear": "清除",
       "Select": "請選擇",
       "SelectStatus": {
         "NoRun": "未執行",
@@ -53,10 +53,15 @@
       "Remark": "備註",
       "CreateTime": "建立時間",
       "UpdateTime": "更新時間",
-      "Btn": {
-        "Operate": "操作",
-        "Detail": "詳細"
-      }
+      "Operate": "操作"
+    },
+    "Btn": {
+      "Submit": "搜尋",
+      "Clear": "清除",
+      "Detail": "詳細",
+      "Create": "新增",
+      "Update": "修改",
+      "Delete": "刪除"
     }
   }
 }
