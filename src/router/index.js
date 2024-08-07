@@ -28,27 +28,27 @@ const router = createRouter({
       ],
     },
     {
-      path: '/task',
-      name: 'Task',
+      path: '/schedule',
+      name: 'Schedule',
       component: LayoutComponent,
       meta: {
-        icon: '/src/assets/feather/airplay.svg'
+        icon: '/src/assets/feather/calendar.svg'
       },
       children: [
         {
-          path: '/task/manage',
-          name: 'TaskManage',
+          path: '/schedule/task',
+          name: 'Task',
           component: () => import("@/views/TaskView.vue"),
           meta: {
-            icon: '/src/assets/feather/airplay.svg'
+            icon: '/src/assets/feather/layers.svg'
           }
         },
         {
-          path: '/task/create',
-          name: 'TaskCreate',
-          component: () => import("@/views/HomePage.vue"),
+          path: '/schedule/cron',
+          name: 'Cron',
+          component: () => import("@/views/CronView.vue"),
           meta: {
-            icon: '/src/assets/feather/airplay.svg'
+            icon: '/src/assets/feather/package.svg'
           }
         },
       ],

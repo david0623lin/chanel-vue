@@ -3,9 +3,9 @@
   "Router": {
     "Login": "登入",
     "Home": "首頁",
-    "Task": "任務",
-    "TaskManage": "任務管理",
-    "TaskCreate": "任務新增"
+    "Schedule": "行程中心",
+    "Task": "任務管理",
+    "Cron": "排程管理"
   },
   "LoginView": {
     "Title": "任務管理後台",
@@ -31,6 +31,52 @@
         "NoRun": "未執行",
         "Run": "已執行",
         "RunErr": "異常"
+      },
+      "SelectMethod": {
+        "Get": "GET",
+        "Post": "POST",
+        "Put": "PUT",
+        "Delete": "DELETE"
+      }
+    },
+    "SearchResult": {
+      "Title": "搜尋結果",
+      "Protocol": "協議",
+      "Domain": "網域",
+      "Path": "路徑",
+      "Port": "埠號",
+      "Method": "方法",
+      "Args": "參數",
+      "Headers": "表頭",
+      "Execute": "執行時間",
+      "Status": "狀態",
+      "Remark": "備註",
+      "CreateTime": "建立時間",
+      "UpdateTime": "更新時間",
+      "Operate": "操作"
+    },
+    "Btn": {
+      "Submit": "搜尋",
+      "Clear": "清除",
+      "Detail": "詳細",
+      "Create": "新增",
+      "Update": "修改",
+      "Delete": "刪除"
+    }
+  },
+  "CronView": {
+    "Title": "排程管理",
+    "SearchItem": {
+      "Title": "搜尋項目",
+      "StartTime": "開始時間",
+      "EndTime": "結束時間",
+      "Status": "狀態",
+      "Method": "方法",
+      "Path": "路徑",
+      "Select": "請選擇",
+      "SelectStatus": {
+        "Enable": "啟用",
+        "Disable": "停用"
       },
       "SelectMethod": {
         "Get": "GET",
