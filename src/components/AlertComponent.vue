@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, defineExpose } from "vue";
+import { ref } from "vue";
 
 const alert = ref({
     visible: false,

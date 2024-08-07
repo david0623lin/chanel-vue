@@ -36,7 +36,7 @@
                         <div class="icon-wrapper">
                             <img src="/src/assets/feather/airplay.svg" alt="" width="30" height="24">
                         </div>
-                        {{ route.name }}
+                        {{ $t("Router." + route.name) }}
                     </router-link>
                 </li>
             </ul>
@@ -111,6 +111,7 @@ header {
     /* 使內容區域填滿剩餘空間 */
     padding: 1rem;
     overflow-y: auto;
+    background-color: #f8f9fa;
 }
 
 .icon-wrapper {

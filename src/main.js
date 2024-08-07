@@ -6,9 +6,13 @@ import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import i18n from "@/language/index"
 
+const pinia = createPinia();
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate' // pinia 持久化
+pinia.use(piniaPluginPersistedstate)
+
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 app.use(i18n)
 

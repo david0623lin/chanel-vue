@@ -1,18 +1,9 @@
 {
   "AxiosCatchError": "Call Api Error",
-  "404": {
-    "oops": "OOPS!",
-    "message": "Please check that the URL you entered is correct."
-  },
   "Router": {
     "Login": "Login",
-    "Dashboard": "Dashboard",
-    "Example": "Example",
-    "Form": "Form",
-    "Table": "Table"
-  },
-  "Menu": {
-    "Title": "Example Template"
+    "Home": "Test",
+    "Task": "Task Manage"
   },
   "LoginView": {
     "Title": "Task Admin Console",
@@ -23,5 +14,49 @@
     "ErrorPassword": "Pleace enter password",
     "Login": "Login",
     "Clear": "Clear"
+  },
+  "TaskView": {
+    "Title": "Task Manage",
+    "SearchItem": {
+      "Title": "Search Items",
+      "StartTime": "Start Time",
+      "EndTime": "End Time",
+      "Status": "Status",
+      "Method": "Method",
+      "Path": "Api Path",
+      "Submit": "Search",
+      "Clear": "Clear",
+      "Select": "Please Select",
+      "SelectStatus": {
+        "NoRun": "No Run",
+        "Run": "Run",
+        "RunErr": "Run Error"
+      },
+      "SelectMethod": {
+        "Get": "GET",
+        "Post": "POST",
+        "Put": "PUT",
+        "Delete": "DELETE"
+      }
+    },
+    "SearchResult": {
+      "Title": "Search Results",
+      "Protocol": "Protocol",
+      "Domain": "Domain",
+      "Path": "Path",
+      "Port": "Port",
+      "Method": "Method",
+      "Args": "Args",
+      "Headers": "Headers",
+      "Execute": "Execute Time",
+      "Status": "Status",
+      "Remark": "Remark",
+      "CreateTime": "Create Time",
+      "UpdateTime": "Update Time",
+      "Btn": {
+        "Operate": "Operate",
+        "Detail": "Detail"
+      }
+    }
   }
 }

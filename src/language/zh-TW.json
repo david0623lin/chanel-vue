@@ -1,18 +1,9 @@
 {
   "AxiosCatchError": "呼叫API錯誤",
-  "404": {
-    "oops": "噢不!",
-    "message": "請檢查您輸入的網址是否正確。"
-  },
   "Router": {
     "Login": "登入",
-    "Dashboard": "首頁",
-    "Example": "範例",
-    "Form": "表單",
-    "Table": "表格"
-  },
-  "Menu": {
-    "Title": "範例樣板"
+    "Home": "測試",
+    "Task": "任務管理"
   },
   "LoginView": {
     "Title": "任務管理後台",
@@ -23,5 +14,49 @@
     "ErrorPassword": "請輸入密碼",
     "Login": "登入",
     "Clear": "清除"
+  },
+  "TaskView": {
+    "Title": "任務管理",
+    "SearchItem": {
+      "Title": "搜尋項目",
+      "StartTime": "開始時間",
+      "EndTime": "結束時間",
+      "Status": "狀態",
+      "Method": "方法",
+      "Path": "路徑",
+      "Submit": "搜尋",
+      "Clear": "清除",
+      "Select": "請選擇",
+      "SelectStatus": {
+        "NoRun": "未執行",
+        "Run": "已執行",
+        "RunErr": "異常"
+      },
+      "SelectMethod": {
+        "Get": "GET",
+        "Post": "POST",
+        "Put": "PUT",
+        "Delete": "DELETE"
+      }
+    },
+    "SearchResult": {
+      "Title": "搜尋結果",
+      "Protocol": "協議",
+      "Domain": "網域",
+      "Path": "路徑",
+      "Port": "埠號",
+      "Method": "方法",
+      "Args": "參數",
+      "Headers": "表頭",
+      "Execute": "執行時間",
+      "Status": "狀態",
+      "Remark": "備註",
+      "CreateTime": "建立時間",
+      "UpdateTime": "更新時間",
+      "Btn": {
+        "Operate": "操作",
+        "Detail": "詳細"
+      }
+    }
   }
 }

@@ -6,13 +6,15 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/LoginView.vue'),
     },
     {
       path: '/home',
-      name: 'home',
-      meta: { title: '首頁' },
+      name: 'Home',
+      meta: { 
+        title: '首頁',
+      },
       component: LayoutComponent,
       children: [
         {
@@ -23,15 +25,17 @@ const router = createRouter({
       ],
     },
     {
-      path: '/home2',
-      name: 'home2',
-      meta: { title: '首頁2' },
+      path: '/task',
+      name: 'Task',
+      meta: { 
+        title: '任務管理',
+      },
       component: LayoutComponent,
       children: [
         {
           path: '',
           name: '',
-          component: () => import("@/views/Home2Page.vue")
+          component: () => import("@/views/TaskView.vue")
         },
       ],
     },

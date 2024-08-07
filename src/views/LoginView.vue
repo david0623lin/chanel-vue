@@ -61,21 +61,19 @@ const handleLogin = () => {
     if (!validateForm()) {
         return;
     }
-    axiosInstance.post('/admin/login', form.value)
-        .then(response => {
-            if (response.data.Code === 0) {
-                tokenStore.setSid(response.data.Result.Sid);
-                tokenStore.setWid(response.data.Result.Wid);
-                alertRef.value.showAlert(response.data.Message, 'success');
-                // 轉導
-            } else {
-                alertRef.value.showAlert(response.data.Message, 'danger');
-            }
-        })
-        .catch(error => {
-            console.error('Request Error:', error);
-            alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
-        });
+    axiosInstance.post('/admin/login', form.value).then(response => {
+        if (response.data.Code === 0) {
+            tokenStore.setSid(response.data.Result.Sid);
+            tokenStore.setWid(response.data.Result.Wid);
+            alertRef.value.showAlert(response.data.Message, 'success');
+            // 轉導
+        } else {
+            alertRef.value.showAlert(response.data.Message, 'danger');
+        }
+    }).catch(error => {
+        console.error('Request Error:', error);
+        alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
+    });
 };
 
 const handleClear = () => {
