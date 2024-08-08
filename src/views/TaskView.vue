@@ -20,9 +20,9 @@
                     <label for="status">{{ $t("TaskView.SearchItem.Status") }}</label>
                     <select id="status" v-model="form.Status">
                         <option value="">{{ $t("TaskView.SearchItem.Select") }}</option>
-                        <option value="1">{{ $t("TaskView.SearchItem.SelectStatus.NoRun") }}</option>
-                        <option value="2">{{ $t("TaskView.SearchItem.SelectStatus.Run") }}</option>
-                        <option value="3">{{ $t("TaskView.SearchItem.SelectStatus.RunErr") }}</option>
+                        <option v-for="(label, value) in resultStatusMapValue" :key="value" :value="value">
+                            {{ label }}
+                        </option>
                     </select>
                 </div>
 
@@ -30,10 +30,9 @@
                     <label for="method">{{ $t("TaskView.SearchItem.Method") }}</label>
                     <select id="method" v-model="form.Method">
                         <option value="">{{ $t("TaskView.SearchItem.Select") }}</option>
-                        <option value="GET">{{ $t("TaskView.SearchItem.SelectMethod.Get") }}</option>
-                        <option value="POST">{{ $t("TaskView.SearchItem.SelectMethod.Post") }}</option>
-                        <option value="PUT">{{ $t("TaskView.SearchItem.SelectMethod.Put") }}</option>
-                        <option value="DELETE">{{ $t("TaskView.SearchItem.SelectMethod.Delete") }}</option>
+                        <option v-for="(label, value) in resultMethodMapValue" :key="value" :value="value">
+                            {{ label }}
+                        </option>
                     </select>
                 </div>
 
@@ -47,7 +46,7 @@
                     <button type="button" class="btn btn-secondary" @click="handleClear">
                         {{ $t("TaskView.Btn.Clear") }}
                     </button>
-                    <button type="button" class="btn btn-success" @click="showModal">
+                    <button type="button" class="btn btn-success" @click="handleShowCreate">
                         {{ $t("TaskView.Btn.Create") }}
                     </button>
                 </div>
@@ -65,13 +64,8 @@
                     <th>{{ $t("TaskView.SearchResult.Path") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Port") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Method") }}</th>
-                    <th>{{ $t("TaskView.SearchResult.Args") }}</th>
-                    <th>{{ $t("TaskView.SearchResult.Headers") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Execute") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Status") }}</th>
-                    <th>{{ $t("TaskView.SearchResult.Remark") }}</th>
-                    <th>{{ $t("TaskView.SearchResult.CreateTime") }}</th>
-                    <th>{{ $t("TaskView.SearchResult.UpdateTime") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Operate") }}</th>
                 </tr>
             </thead>
@@ -82,17 +76,14 @@
                     <td>{{ result.Path }}</td>
                     <td>{{ result.Port }}</td>
                     <td>
-                        <span :class="methodMap[result.Method]">{{ result.Method }}</span>
+                        <span :class="resultMethodMap[result.Method]">{{ result.Method }}</span>
                     </td>
-                    <td>{{ result.Args }}</td>
-                    <td>{{ result.Headers }}</td>
                     <td>{{ formatTimestamp(result.Execute) }}</td>
-                    <td>{{ result.Status }}</td>
-                    <td>{{ result.Remark }}</td>
-                    <td>{{ formatTimestamp(result.CreateTime) }}</td>
-                    <td>{{ formatTimestamp(result.UpdateTime) }}</td>
                     <td>
-                        <button type="button" class="btn btn-outline-primary" @click="handleClear">{{
+                        <span :class="resultStatusMap[result.Status]">{{ resultStatusMapValue[result.Status] }}</span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" @click="handleShowDetail(index)">{{
                             $t("TaskView.Btn.Detail") }}
                         </button>
                         <button type="button" class="btn btn-outline-warning" @click="handleClear">{{
@@ -107,24 +98,22 @@
         </table>
     </div>
 
-    <ModalComponent :title="'新增項目'" :submitText="'送出'" :cancelText="'取消'" :isVisible="isModalVisible"
-        @close="isModalVisible = false" @submit="handleModalSubmit">
-        <form>
-            <div class="form-group">
-                <label for="new-item">新項目</label>
-                <input type="text" id="new-item" v-model="newItem" />
-            </div>
-        </form>
-    </ModalComponent>
+    <div>
+        <CreateProps v-if="showCreate" :title="$t('TaskView.CreateProps.Title')" :methodMap="resultMethodMapValue"
+            @submit="handleCreate" />
+        <DetailProps v-if="showDetail" :title="$t('TaskView.DetailProps.Title')" :data="detailData" />
+    </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import AlertComponent from '@/components/AlertComponent.vue';
-import ModalComponent from '@/components/ModalComponent.vue';
+import CreateProps from '@/components/TaskView/CreateProps.vue';
+import DetailProps from '@/components/TaskView/DetailProps.vue';
 import axiosInstance from '@/utils/api'
 import { formatTimestamp, convertToTimestamp, getTodayRange } from '@/utils/tools/time'
 import { useI18n } from 'vue-i18n';
+import * as bootstrap from 'bootstrap';
 
 const { t } = useI18n(); // 語系
 const alertRef = ref(null);
@@ -145,11 +134,30 @@ const form = ref({
 
 const results = ref([]);
 
-const methodMap = ref({
+const resultStatusMap = ref({
+    1: "badge rounded-pill bg-secondary",
+    2: "badge rounded-pill bg-success",
+    3: "badge rounded-pill bg-danger",
+})
+
+const resultStatusMapValue = ref({
+    1: t("TaskView.SearchItem.SelectStatus.NoRun"),
+    2: t("TaskView.SearchItem.SelectStatus.Run"),
+    3: t("TaskView.SearchItem.SelectStatus.RunErr"),
+})
+
+const resultMethodMap = ref({
     GET: "badge rounded-pill bg-info",
     POST: "badge rounded-pill bg-success",
     PUT: "badge rounded-pill bg-warning",
     DELETE: "badge rounded-pill bg-danger",
+})
+
+const resultMethodMapValue = ref({
+    GET: t("TaskView.SearchItem.SelectMethod.Get"),
+    POST: t("TaskView.SearchItem.SelectMethod.Post"),
+    PUT: t("TaskView.SearchItem.SelectMethod.Put"),
+    DELETE: t("TaskView.SearchItem.SelectMethod.Delete"),
 })
 
 function handleSearch() {
@@ -163,7 +171,6 @@ function handleSearch() {
         }
     }).then(response => {
         if (response.data.Code === 0) {
-            // 轉導
             results.value = response.data.Result;
         } else {
             alertRef.value.showAlert(response.data.Message, 'danger');
@@ -182,17 +189,42 @@ function handleClear() {
     form.value.Path = '';
 }
 
-const isModalVisible = ref(false);
-const newItem = ref('');
+const showCreate = ref(false);
 
-function showModal() {
-    isModalVisible.value = true;
+function handleShowCreate() {
+    showCreate.value = true;
+    setTimeout(() => {
+        const modalElement = document.getElementById('TaskViewModelCreate');
+        const modalInstance = new bootstrap.Modal(modalElement);
+        modalInstance.show();
+    }, 100);
 }
 
-function handleModalSubmit() {
-    // 在這裡處理新增表單提交邏輯
-    console.log("New item:", newItem.value);
-    isModalVisible.value = false;
+function handleCreate(formData) {
+    axiosInstance.post('/task/create', formData).then(response => {
+        if (response.data.Code === 0) {
+            alertRef.value.showAlert(response.data.Message, 'success');
+        } else {
+            alertRef.value.showAlert(response.data.Message, 'danger');
+        }
+    }).catch(error => {
+        console.error('Request Error:', error);
+        alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
+    });
+    showCreate.value = false;
+}
+
+const showDetail = ref(false);
+const detailData = ref({})
+
+const handleShowDetail = (index) => {
+    showDetail.value = true;
+    detailData.value = results.value[index]
+    setTimeout(() => {
+        const modalElement = document.getElementById('TaskViewModelDetail');
+        const modalInstance = new bootstrap.Modal(modalElement);
+        modalInstance.show();
+    }, 100);
 }
 
 </script>

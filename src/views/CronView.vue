@@ -151,7 +151,6 @@ function handleSearch() {
         }
     }).then(response => {
         if (response.data.Code === 0) {
-            // 轉導
             results.value = response.data.Result;
         } else {
             alertRef.value.showAlert(response.data.Message, 'danger');

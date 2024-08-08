@@ -46,14 +46,51 @@
       "Path": "Path",
       "Port": "Port",
       "Method": "Method",
+      "Execute": "Execute Time",
+      "Status": "Status",
+      "Operate": "Operate"
+    },
+    "CreateProps": {
+      "Title": "Create Task",
+      "Protocol": "Protocol",
+      "Domain": "Domain",
+      "Path": "Path",
+      "Port": "Port",
+      "Method": "Select Method",
+      "Args": {
+        "Lable": "Args",
+        "Field": "Field",
+        "Value": "Value"
+      },
+      "Headers": {
+        "Lable": "Headers",
+        "Field": "Field",
+        "Value": "Value"
+      },
+      "Execute": "Execute Time",
+      "Remark": "Remark",
+      "Btn": {
+        "Submit": "Submit",
+        "Close": "Close"
+      },
+      "Required": "Required"
+    },
+    "DetailProps": {
+      "Title": "Task Detail",
+      "Protocol": "Protocol",
+      "Domain": "Domain",
+      "Path": "Path",
+      "Port": "Port",
+      "Method": "Method",
       "Args": "Args",
       "Headers": "Headers",
       "Execute": "Execute Time",
-      "Status": "Status",
       "Remark": "Remark",
       "CreateTime": "Create Time",
       "UpdateTime": "Update Time",
-      "Operate": "Operate"
+      "Btn": {
+        "Close": "Close"
+      }
     },
     "Btn": {
       "Submit": "Search",

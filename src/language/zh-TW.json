@@ -46,14 +46,51 @@
       "Path": "路徑",
       "Port": "埠號",
       "Method": "方法",
+      "Execute": "執行時間",
+      "Status": "狀態",
+      "Operate": "操作"
+    },
+    "CreateProps": {
+      "Title": "新增任務",
+      "Protocol": "協議",
+      "Domain": "網域",
+      "Path": "路徑",
+      "Port": "埠號",
+      "Method": "請選擇方法",
+      "Args": {
+        "Lable": "參數",
+        "Field": "欄位",
+        "Value": "內容"
+      },
+      "Headers": {
+        "Lable": "表頭",
+        "Field": "欄位",
+        "Value": "內容"
+      },
+      "Execute": "執行時間",
+      "Remark": "備註",
+      "Btn": {
+        "Submit": "送出",
+        "Close": "關閉"
+      },
+      "Required": "必填"
+    },
+    "DetailProps": {
+      "Title": "任務詳情",
+      "Protocol": "協議",
+      "Domain": "網域",
+      "Path": "路徑",
+      "Port": "埠號",
+      "Method": "方法",
       "Args": "參數",
       "Headers": "表頭",
       "Execute": "執行時間",
-      "Status": "狀態",
       "Remark": "備註",
       "CreateTime": "建立時間",
       "UpdateTime": "更新時間",
-      "Operate": "操作"
+      "Btn": {
+        "Close": "關閉"
+      }
     },
     "Btn": {
       "Submit": "搜尋",
