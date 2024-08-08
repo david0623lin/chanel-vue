@@ -13,6 +13,13 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group">
+                                <input type="text" id="Topic" v-model="form.Topic"
+                                    :class="{ 'is-invalid': required.Topic }"
+                                    :placeholder="$t('TaskView.CreateProps.Topic')" />
+                                <div v-if="required.Topic" class="invalid-feedback">{{ required.Topic }}
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <input type="text" id="Protocol" v-model="form.Protocol"
                                     :class="{ 'is-invalid': required.Protocol }"
                                     :placeholder="$t('TaskView.CreateProps.Protocol')" />
@@ -116,7 +123,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n(); // 語系
@@ -133,6 +140,7 @@ defineProps({
 });
 
 const form = ref({
+    Topic: "",
     Protocol: "",
     Domain: "",
     Path: "",
@@ -145,6 +153,7 @@ const form = ref({
 });
 
 const required = ref({
+    Topic: "",
     Protocol: "",
     Domain: "",
     Path: "",
@@ -178,6 +187,7 @@ const handleRemove = (type, index) => {
 };
 
 const validateForm = () => {
+    required.value.Topic = form.value.Topic ? '' : t("TaskView.CreateProps.Required");
     required.value.Protocol = form.value.Protocol ? '' : t("TaskView.CreateProps.Required");
     required.value.Domain = form.value.Domain ? '' : t("TaskView.CreateProps.Required");
     required.value.Path = form.value.Path ? '' : t("TaskView.CreateProps.Required");
@@ -188,7 +198,7 @@ const validateForm = () => {
 
 const emit = defineEmits(['submit']);
 
-function handleSubmit() {
+const handleSubmit = () => {
     if (!validateForm()) {
         return;
     }
@@ -212,6 +222,7 @@ function handleSubmit() {
 
 const handleClose = () => {
     form.value = {
+        Topic: "",
         Protocol: "",
         Domain: "",
         Path: "",
@@ -223,6 +234,7 @@ const handleClose = () => {
         Remark: ""
     }
     required.value = {
+        Topic: "",
         Protocol: "",
         Domain: "",
         Path: "",
@@ -275,7 +287,6 @@ select {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
     flex: 1 1 50%;
     min-width: 300px;
 }

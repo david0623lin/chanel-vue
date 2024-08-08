@@ -23,9 +23,9 @@
       "Title": "Search Items",
       "StartTime": "Start Time",
       "EndTime": "End Time",
+      "Topic": "Topic",
       "Status": "Status",
       "Method": "Method",
-      "Path": "Api Path",
       "Select": "Please Select",
       "SelectStatus": {
         "NoRun": "No Run",
@@ -41,6 +41,7 @@
     },
     "SearchResult": {
       "Title": "Search Results",
+      "Topic": "Topic",
       "Protocol": "Protocol",
       "Domain": "Domain",
       "Path": "Path",
@@ -52,6 +53,7 @@
     },
     "CreateProps": {
       "Title": "Create Task",
+      "Topic": "Topic",
       "Protocol": "Protocol",
       "Domain": "Domain",
       "Path": "Path",
@@ -77,10 +79,15 @@
     },
     "DetailProps": {
       "Title": "Task Detail",
+      "Topic": "Topic",
       "Protocol": "Protocol",
       "Domain": "Domain",
       "Path": "Path",
       "Port": "Port",
+      "Status": "Status",
+      "Result": "Result",
+      "Response": "Response Info",
+      "Error": "Error Info",
       "Method": "Method",
       "Args": "Args",
       "Headers": "Headers",
@@ -88,6 +95,10 @@
       "Remark": "Remark",
       "CreateTime": "Create Time",
       "UpdateTime": "Update Time",
+      "ResultMap": {
+        "Success": "Success",
+        "Fail": "Fail"
+      },
       "Btn": {
         "Close": "Close"
       }

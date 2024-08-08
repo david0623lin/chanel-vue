@@ -17,6 +17,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="Topic">{{ $t("TaskView.SearchItem.Topic") }}</label>
+                    <input type="text" id="Topic" v-model="form.Topic" />
+                </div>
+
+                <div class="form-group">
                     <label for="status">{{ $t("TaskView.SearchItem.Status") }}</label>
                     <select id="status" v-model="form.Status">
                         <option value="">{{ $t("TaskView.SearchItem.Select") }}</option>
@@ -37,11 +42,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="path">{{ $t("TaskView.SearchItem.Path") }}</label>
-                    <input type="text" id="path" v-model="form.Path" />
-                </div>
-
-                <div class="form-group">
                     <button type="submit" class="btn btn-primary">{{ $t("TaskView.Btn.Submit") }}</button>
                     <button type="button" class="btn btn-secondary" @click="handleClear">
                         {{ $t("TaskView.Btn.Clear") }}
@@ -59,6 +59,7 @@
         <table class="results-table">
             <thead>
                 <tr>
+                    <th>{{ $t("TaskView.SearchResult.Topic") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Protocol") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Domain") }}</th>
                     <th>{{ $t("TaskView.SearchResult.Path") }}</th>
@@ -71,6 +72,7 @@
             </thead>
             <tbody v-if="results.length > 0">
                 <tr v-for="(result, index) in results" :key="index">
+                    <td>{{ result.Topic }}</td>
                     <td>{{ result.Protocol }}</td>
                     <td>{{ result.Domain }}</td>
                     <td>{{ result.Path }}</td>
@@ -101,7 +103,8 @@
     <div>
         <CreateProps v-if="showCreate" :title="$t('TaskView.CreateProps.Title')" :methodMap="resultMethodMapValue"
             @submit="handleCreate" />
-        <DetailProps v-if="showDetail" :title="$t('TaskView.DetailProps.Title')" :data="detailData" />
+        <DetailProps v-if="showDetail" :title="$t('TaskView.DetailProps.Title')" :data="detailData"
+            :statusMap="resultStatusMapValue" />
     </div>
 </template>
 
@@ -127,9 +130,9 @@ onMounted(() => {
 const form = ref({
     StartTime: '',
     EndTime: '',
+    Topic: '',
     Status: '',
     Method: '',
-    Path: '',
 });
 
 const results = ref([]);
@@ -160,14 +163,14 @@ const resultMethodMapValue = ref({
     DELETE: t("TaskView.SearchItem.SelectMethod.Delete"),
 })
 
-function handleSearch() {
+const handleSearch = () => {
     axiosInstance.get('/task/list', {
         params: {
             StartTime: convertToTimestamp(form.value.StartTime),
             EndTime: convertToTimestamp(form.value.EndTime),
+            Topic: form.value.Topic,
             Status: form.value.Status,
             Method: form.value.Method,
-            Path: form.value.Path,
         }
     }).then(response => {
         if (response.data.Code === 0) {
@@ -181,7 +184,7 @@ function handleSearch() {
     });
 }
 
-function handleClear() {
+const handleClear = () => {
     form.value.StartTime = '';
     form.value.EndTime = '';
     form.value.Status = '';
@@ -191,7 +194,7 @@ function handleClear() {
 
 const showCreate = ref(false);
 
-function handleShowCreate() {
+const handleShowCreate = () => {
     showCreate.value = true;
     setTimeout(() => {
         const modalElement = document.getElementById('TaskViewModelCreate');
@@ -200,7 +203,7 @@ function handleShowCreate() {
     }, 100);
 }
 
-function handleCreate(formData) {
+const handleCreate = (formData) => {
     axiosInstance.post('/task/create', formData).then(response => {
         if (response.data.Code === 0) {
             alertRef.value.showAlert(response.data.Message, 'success');
@@ -219,7 +222,31 @@ const detailData = ref({})
 
 const handleShowDetail = (index) => {
     showDetail.value = true;
-    detailData.value = results.value[index]
+
+    axiosInstance.get('/task/detail', {
+        params: {
+            ID: results.value[index].ID,
+        }
+    }).then(response => {
+        if (response.data.Code === 0) {
+            response.data.Result.Args = Object.entries(response.data.Result.Args).map(([key, value]) => ({
+                Field: key,
+                Value: value
+            }));
+            response.data.Result.Headers = Object.entries(response.data.Result.Headers).map(([key, value]) => ({
+                Field: key,
+                Value: value
+            }));
+            detailData.value = response.data.Result;
+            console.log(detailData.value)
+        } else {
+            alertRef.value.showAlert(response.data.Message, 'danger');
+        }
+    }).catch(error => {
+        console.error('Request Error:', error);
+        alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
+    });
+
     setTimeout(() => {
         const modalElement = document.getElementById('TaskViewModelDetail');
         const modalInstance = new bootstrap.Modal(modalElement);

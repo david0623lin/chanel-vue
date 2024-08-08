@@ -23,9 +23,9 @@
       "Title": "搜尋項目",
       "StartTime": "開始時間",
       "EndTime": "結束時間",
+      "Topic": "主題",
       "Status": "狀態",
       "Method": "方法",
-      "Path": "路徑",
       "Select": "請選擇",
       "SelectStatus": {
         "NoRun": "未執行",
@@ -41,6 +41,7 @@
     },
     "SearchResult": {
       "Title": "搜尋結果",
+      "Topic": "主題",
       "Protocol": "協議",
       "Domain": "網域",
       "Path": "路徑",
@@ -52,6 +53,7 @@
     },
     "CreateProps": {
       "Title": "新增任務",
+      "Topic": "主題",
       "Protocol": "協議",
       "Domain": "網域",
       "Path": "路徑",
@@ -77,10 +79,15 @@
     },
     "DetailProps": {
       "Title": "任務詳情",
+      "Topic": "主題",
       "Protocol": "協議",
       "Domain": "網域",
       "Path": "路徑",
       "Port": "埠號",
+      "Status": "狀態",
+      "Result": "結果",
+      "Response": "回傳資訊",
+      "Error": "錯誤資訊",
       "Method": "方法",
       "Args": "參數",
       "Headers": "表頭",
@@ -88,6 +95,10 @@
       "Remark": "備註",
       "CreateTime": "建立時間",
       "UpdateTime": "更新時間",
+      "ResultMap": {
+        "Success": "成功",
+        "Fail": "失敗"
+      },
       "Btn": {
         "Close": "關閉"
       }

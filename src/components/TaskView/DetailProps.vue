@@ -11,6 +11,10 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="Topic">{{ $t("TaskView.DetailProps.Topic") }}</label>
+                                <input type="text" id="Topic" v-bind:value="data.Topic" readonly />
+                            </div>
+                            <div class="form-group">
                                 <label for="Protocol">{{ $t("TaskView.DetailProps.Protocol") }}</label>
                                 <input type="text" id="Protocol" v-bind:value="data.Protocol" readonly />
                             </div>
@@ -34,6 +38,14 @@
                                 <label for="Execute">{{ $t("TaskView.DetailProps.Execute") }}</label>
                                 <input type="text" id="Execute" v-bind:value="formatTimestamp(data.Execute)" readonly />
                             </div>
+                            <div class="form-group">
+                                <label for="Status">{{ $t("TaskView.DetailProps.Status") }}</label>
+                                <input type="text" id="Status" v-bind:value="statusMap[data.Status]" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label for="Result">{{ $t("TaskView.DetailProps.Result") }}</label>
+                                <input type="text" id="Result" v-bind:value="resultMap[data.Result]" readonly />
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -53,6 +65,32 @@
                                     readonly />
                             </div>
                         </div>
+                        <div class="form-row" v-if="data.Args && data.Args.length > 0">
+                            <div class="form-group">
+                                <label for="Remark">{{ $t("TaskView.DetailProps.Args") }}</label>
+                                <div v-for="(arg, index) in data.Args" :key="index" class="add-item">
+                                    <input type="text" :id="arg.Field" :value="arg.Field" readonly />
+                                    <input type="text" :id="arg.Value" :value="arg.Value" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" v-if="data.Args && data.Headers.length > 0">
+                            <div class="form-group">
+                                <label for="Remark">{{ $t("TaskView.DetailProps.Headers") }}</label>
+                                <div v-for="(header, index) in data.Headers" :key="index" class="add-item">
+                                    <input type="text" :id="header.Field" :value="header.Field" readonly />
+                                    <input type="text" :id="header.Value" :value="header.Value" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" v-if="data.Response && data.Response != ''">
+                            <label for="Response">{{ $t("TaskView.DetailProps.Response") }}</label>
+                            <input type="textarea" id="Response" v-bind:value="data.Response" readonly />
+                        </div>
+                        <div class="form-group" v-if="data.Error && data.Error != ''">
+                            <label for="Error">{{ $t("TaskView.DetailProps.Error") }}</label>
+                            <input type="text" id="Error" v-bind:value="data.Error" readonly />
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -66,9 +104,10 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { ref } from 'vue'
 import { formatTimestamp } from '@/utils/tools/time'
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n(); // 語系
 
 defineProps({
     title: {
@@ -82,8 +121,17 @@ defineProps({
     data: {
         type: {},
         required: true
-    }
+    },
+    statusMap: {
+        type: {},
+        required: true
+    },
 });
+
+const resultMap = ref({
+    1: t("TaskView.DetailProps.ResultMap.Success"),
+    2: t("TaskView.DetailProps.ResultMap.Fail"),
+})
 
 </script>
 
@@ -91,14 +139,6 @@ defineProps({
 input {
     width: 100%;
     padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
     box-sizing: border-box;
     border: 1px solid #ced4da;
     border-radius: 4px;
@@ -117,29 +157,17 @@ select {
     margin-bottom: 5px;
 }
 
-.add-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
 .add-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 10px;
-    flex: 1 1 30%;
+    flex: 1 1 50%;
     min-width: 300px;
 }
 
 .add-item input {
-    flex: 1 1 25%;
+    flex: 1 1 50%;
     margin-right: 10px;
     margin-bottom: 5px;
-}
-
-.form-group button {
-    margin-bottom: 5px;
-    margin-left: 5px;
 }
 </style>
