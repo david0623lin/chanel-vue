@@ -105,6 +105,22 @@
       "Required": "必填",
       "CantUpdate":"已執行, 無法修改"
     },
+    "DeleteProps": {
+      "Title": "刪除任務",
+      "Topic": "主題",
+      "Protocol": "協議",
+      "Domain": "網域",
+      "Path": "路徑",
+      "Port": "埠號",
+      "Method": "方法",
+      "Execute": "執行時間",
+      "Remark": "備註",
+      "Btn": {
+        "Submit": "刪除",
+        "Close": "關閉"
+      },
+      "CantDelete":"已執行, 無法刪除"
+    },
     "DetailProps": {
       "Title": "任務詳情",
       "Topic": "主題",

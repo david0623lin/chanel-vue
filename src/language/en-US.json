@@ -105,6 +105,22 @@
       "Required": "Required",
       "CantUpdate":"Already Executed And Cannot Be Update"
     },
+    "DeleteProps": {
+      "Title": "Delete Task",
+      "Topic": "Topic",
+      "Protocol": "Protocol",
+      "Domain": "Domain",
+      "Path": "Path",
+      "Port": "Port",
+      "Method": "Method",
+      "Execute": "Execute Time",
+      "Remark": "Remark",
+      "Btn": {
+        "Submit": "Delete",
+        "Close": "Close"
+      },
+      "CantDelete":"已執行, 無法刪除"
+    },
     "DetailProps": {
       "Title": "Task Detail",
       "Topic": "Topic",

@@ -186,7 +186,6 @@ const addHeaders = ref([]);
 // 初始化表單
 const initializeForm = () => {
     form.value = { ...props.data };
-    form.value.TaskID = props.data.ID;
     addArgs.value = props.data.Args;
     addHeaders.value = props.data.Headers;
 };
@@ -258,6 +257,7 @@ const handleSubmit = () => {
 
 const handleClose = () => {
     form.value = {
+        TaskID: "",
         Topic: "",
         Protocol: "",
         Domain: "",
