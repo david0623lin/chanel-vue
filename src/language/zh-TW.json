@@ -77,6 +77,34 @@
       },
       "Required": "必填"
     },
+    "UpdateProps": {
+      "Title": "修改任務",
+      "Topic": "主題",
+      "Protocol": "協議",
+      "Domain": "網域",
+      "Path": "路徑",
+      "Port": "埠號",
+      "Method": "方法",
+      "Select": "請選擇",
+      "Args": {
+        "Lable": "參數",
+        "Field": "欄位",
+        "Value": "內容"
+      },
+      "Headers": {
+        "Lable": "表頭",
+        "Field": "欄位",
+        "Value": "內容"
+      },
+      "Execute": "執行時間",
+      "Remark": "備註",
+      "Btn": {
+        "Submit": "送出",
+        "Close": "關閉"
+      },
+      "Required": "必填",
+      "CantUpdate":"已執行, 無法修改"
+    },
     "DetailProps": {
       "Title": "任務詳情",
       "Topic": "主題",

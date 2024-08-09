@@ -88,11 +88,13 @@
                         <button type="button" class="btn btn-outline-primary" @click="handleShowDetail(index)">{{
                             $t("TaskView.Btn.Detail") }}
                         </button>
-                        <button type="button" class="btn btn-outline-warning" @click="handleClear">{{
-                            $t("TaskView.Btn.Update") }}
+                        <button v-if="result.Status == 1" type="button" class="btn btn-outline-warning"
+                            @click="handleShowUpdate(index)">{{
+                                $t("TaskView.Btn.Update") }}
                         </button>
-                        <button type="button" class="btn btn-outline-danger" @click="handleClear">{{
-                            $t("TaskView.Btn.Delete") }}
+                        <button v-if="result.Status == 1" type="button" class="btn btn-outline-danger"
+                            @click="handleClear">{{
+                                $t("TaskView.Btn.Delete") }}
                         </button>
                     </td>
                 </tr>
@@ -105,6 +107,8 @@
             @submit="handleCreate" />
         <DetailProps v-if="showDetail" :title="$t('TaskView.DetailProps.Title')" :data="detailData"
             :statusMap="resultStatusMapValue" />
+        <UpdateProps v-if="showUpdate" :title="$t('TaskView.UpdateProps.Title')" :data="detailData"
+            :methodMap="resultMethodMapValue" @submit="handleUpdate" />
     </div>
 </template>
 
@@ -113,6 +117,7 @@ import { ref, onMounted } from 'vue';
 import AlertComponent from '@/components/AlertComponent.vue';
 import CreateProps from '@/components/TaskView/CreateProps.vue';
 import DetailProps from '@/components/TaskView/DetailProps.vue';
+import UpdateProps from '@/components/TaskView/UpdateProps.vue';
 import axiosInstance from '@/utils/api'
 import { formatTimestamp, convertToTimestamp, getTodayRange } from '@/utils/tools/time'
 import { useI18n } from 'vue-i18n';
@@ -185,11 +190,12 @@ const handleSearch = () => {
 }
 
 const handleClear = () => {
-    form.value.StartTime = '';
-    form.value.EndTime = '';
+    const today = getTodayRange()
+    form.value.StartTime = today[0];
+    form.value.EndTime = today[1];
+    form.value.Topic = '';
     form.value.Status = '';
     form.value.Method = '';
-    form.value.Path = '';
 }
 
 const showCreate = ref(false);
@@ -238,7 +244,6 @@ const handleShowDetail = (index) => {
                 Value: value
             }));
             detailData.value = response.data.Result;
-            console.log(detailData.value)
         } else {
             alertRef.value.showAlert(response.data.Message, 'danger');
         }
@@ -252,6 +257,73 @@ const handleShowDetail = (index) => {
         const modalInstance = new bootstrap.Modal(modalElement);
         modalInstance.show();
     }, 100);
+}
+
+const showUpdate = ref(false);
+const showUpdateIndex = ref(null);
+
+const handleShowUpdate = (index) => {
+    showUpdateIndex.value = index
+
+    axiosInstance.get('/task/detail', {
+        params: {
+            ID: results.value[index].ID,
+        }
+    }).then(response => {
+        if (response.data.Code === 0) {
+            response.data.Result.Args = Object.entries(response.data.Result.Args).map(([key, value]) => ({
+                Field: key,
+                Value: value
+            }));
+            response.data.Result.Headers = Object.entries(response.data.Result.Headers).map(([key, value]) => ({
+                Field: key,
+                Value: value
+            }));
+
+            // 如果狀態已執行要阻擋
+            if (response.data.Result.Status === 2) {
+                alertRef.value.showAlert(t("TaskView.UpdateProps.CantUpdate"), 'warning');
+                return
+            }
+            detailData.value = response.data.Result;
+
+            setTimeout(() => {
+                const modalElement = document.getElementById('TaskViewModelUpdate');
+                const modalInstance = new bootstrap.Modal(modalElement);
+                modalInstance.show();
+            }, 100);
+            showUpdate.value = true;
+        } else {
+            alertRef.value.showAlert(response.data.Message, 'danger');
+        }
+    }).catch(error => {
+        console.error('Request Error:', error);
+        alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
+    });
+}
+
+const handleUpdate = (formData) => {
+    axiosInstance.put('/task/update', formData).then(response => {
+        if (response.data.Code === 0) {
+            // 更新渲染該筆資料
+            results.value[showUpdateIndex.value].Topic = formData.Topic
+            results.value[showUpdateIndex.value].Protocol = formData.Protocol
+            results.value[showUpdateIndex.value].Domain = formData.Domain
+            results.value[showUpdateIndex.value].Path = formData.Path
+            results.value[showUpdateIndex.value].Port = formData.Port
+            results.value[showUpdateIndex.value].Method = formData.Method
+            results.value[showUpdateIndex.value].Execute = formData.Execute
+            results.value[showUpdateIndex.value].Status = formData.Status
+
+            alertRef.value.showAlert(response.data.Message, 'success');
+        } else {
+            alertRef.value.showAlert(response.data.Message, 'danger');
+        }
+    }).catch(error => {
+        console.error('Request Error:', error);
+        alertRef.value.showAlert(t("AxiosCatchError"), 'danger');
+    });
+    showUpdate.value = false;
 }
 
 </script>

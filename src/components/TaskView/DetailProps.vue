@@ -114,10 +114,6 @@ defineProps({
         type: String,
         required: true
     },
-    methodMap: {
-        type: {},
-        required: true
-    },
     data: {
         type: {},
         required: true

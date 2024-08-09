@@ -1,51 +1,56 @@
 <template>
-    <div class="modal fade" id="TaskViewModelCreate" data-bs-backdrop="static" tabindex="-1"
+    <div class="modal fade" id="TaskViewModelUpdate" data-bs-backdrop="static" tabindex="-1"
         aria-labelledby="modalComponentLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalComponentLabel">{{ title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        @click="handleClose">
-                    </button>
+                        @click="handleClose" />
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="form-row">
                             <div class="form-group">
+                                <label for="Topic">{{ $t("TaskView.UpdateProps.Topic") }}</label>
                                 <input type="text" id="Topic" v-model="form.Topic"
                                     :class="{ 'is-invalid': required.Topic }"
-                                    :placeholder="$t('TaskView.CreateProps.Topic')" />
+                                    :placeholder="$t('TaskView.UpdateProps.Topic')" />
                                 <div v-if="required.Topic" class="invalid-feedback">{{ required.Topic }}
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="Protocol">{{ $t("TaskView.UpdateProps.Protocol") }}</label>
                                 <input type="text" id="Protocol" v-model="form.Protocol"
                                     :class="{ 'is-invalid': required.Protocol }"
-                                    :placeholder="$t('TaskView.CreateProps.Protocol')" />
+                                    :placeholder="$t('TaskView.UpdateProps.Protocol')" />
                                 <div v-if="required.Protocol" class="invalid-feedback">{{ required.Protocol }}
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="Domain">{{ $t("TaskView.UpdateProps.Domain") }}</label>
                                 <input type="text" id="Domain" v-model="form.Domain"
                                     :class="{ 'is-invalid': required.Domain }"
-                                    :placeholder="$t('TaskView.CreateProps.Domain')" />
+                                    :placeholder="$t('TaskView.UpdateProps.Domain')" />
                                 <div v-if="required.Domain" class="invalid-feedback">{{ required.Domain }}
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="Path">{{ $t("TaskView.UpdateProps.Path") }}</label>
                                 <input type="text" id="Path" v-model="form.Path"
                                     :class="{ 'is-invalid': required.Path }"
-                                    :placeholder="$t('TaskView.CreateProps.Path')" />
-                                <div v-if="required.Path" class="invalid-feedback">{{ required.Path }}</div>
+                                    :placeholder="$t('TaskView.UpdateProps.Path')" />
+                                <div v-if="required.Path" class="invalid-feedback">{{ required.Path }}
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" id="Port" v-model="form.Port"
-                                    :placeholder="$t('TaskView.CreateProps.Port')" />
+                                <label for="Port">{{ $t("TaskView.UpdateProps.Port") }}</label>
+                                <input type="text" id="Port" v-bind:value="data.Port" />
                             </div>
                             <div class="form-group">
+                                <label for="Method">{{ $t("TaskView.UpdateProps.Method") }}</label>
                                 <select id="method" v-model="form.Method" :class="{ 'is-invalid': required.Method }">
-                                    <option value="">{{ $t("TaskView.CreateProps.Method") }}</option>
+                                    <option value="">{{ $t("TaskView.UpdateProps.Select") }}</option>
                                     <option v-for="(label, value) in methodMap" :key="value" :value="value">
                                         {{ label }}
                                     </option>
@@ -54,31 +59,32 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="Execute">{{ $t("TaskView.UpdateProps.Execute") }}</label>
                                 <input type="text" id="Execute" v-model="form.Execute"
                                     :class="{ 'is-invalid': required.Execute }"
-                                    :placeholder="$t('TaskView.CreateProps.Execute')" />
+                                    :placeholder="$t('TaskView.UpdateProps.Execute')" />
                                 <div v-if="required.Execute" class="invalid-feedback">{{ required.Execute }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <input type="text" id="Remark" v-model="form.Remark"
-                                    :placeholder="$t('TaskView.CreateProps.Remark')" />
+                                <label for="Remark">{{ $t("TaskView.UpdateProps.Remark") }}</label>
+                                <input type="text" id="Remark" v-bind:value="data.Remark" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="Args">{{ $t("TaskView.CreateProps.Args.Lable") }}</label>
+                                <label for="Args">{{ $t("TaskView.UpdateProps.Args.Lable") }}</label>
                                 <button type="button" class="btn btn-secondary btn-sm" @click="handleAdd(1)">
                                     <span>+</span>
                                 </button>
                                 <div class="add-container">
                                     <div v-for="(arg, index) in addArgs" :key="index" class="add-item">
                                         <input type="text" v-model="arg.Field"
-                                            :placeholder="$t('TaskView.CreateProps.Args.Field')" />
+                                            :placeholder="$t('TaskView.UpdateProps.Args.Field')" />
                                         <input type="text" v-model="arg.Value"
-                                            :placeholder="$t('TaskView.CreateProps.Args.Value')" />
+                                            :placeholder="$t('TaskView.UpdateProps.Args.Value')" />
                                         <button type="button" class="btn btn-danger btn-sm"
                                             @click="handleRemove(1, index)">
                                             <span>-</span>
@@ -89,16 +95,16 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="Args">{{ $t("TaskView.CreateProps.Headers.Lable") }}</label>
+                                <label for="Args">{{ $t("TaskView.UpdateProps.Headers.Lable") }}</label>
                                 <button type="button" class="btn btn-secondary btn-sm" @click="handleAdd(2)">
                                     <span>+</span>
                                 </button>
                                 <div class="add-container">
                                     <div v-for="(header, index) in addHeaders" :key="index" class="add-item">
                                         <input type="text" v-model="header.Field"
-                                            :placeholder="$t('TaskView.CreateProps.Headers.Field')" />
+                                            :placeholder="$t('TaskView.UpdateProps.Headers.Field')" />
                                         <input type="text" v-model="header.Value"
-                                            :placeholder="$t('TaskView.CreateProps.Headers.Value')" />
+                                            :placeholder="$t('TaskView.UpdateProps.Headers.Value')" />
                                         <button type="button" class="btn btn-danger btn-sm"
                                             @click="handleRemove(2, index)">
                                             <span>-</span>
@@ -107,14 +113,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" v-if="data.Response && data.Response != ''">
+                            <label for="Response">{{ $t("TaskView.UpdateProps.Response") }}</label>
+                            <input type="textarea" id="Response" v-bind:value="data.Response" />
+                        </div>
+                        <div class="form-group" v-if="data.Error && data.Error != ''">
+                            <label for="Error">{{ $t("TaskView.UpdateProps.Error") }}</label>
+                            <input type="text" id="Error" v-bind:value="data.Error" />
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" @click="handleSubmit">
-                        {{ $t("TaskView.CreateProps.Btn.Submit") }}
+                        {{ $t("TaskView.UpdateProps.Btn.Submit") }}
                     </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="handleClose">{{
-                        $t("TaskView.CreateProps.Btn.Close") }}
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="handleClose">
+                        {{ $t("TaskView.UpdateProps.Btn.Close") }}
                     </button>
                 </div>
             </div>
@@ -123,23 +137,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n(); // 語系
+const { t } = useI18n();
 
-defineProps({
+const props = defineProps({
     title: {
         type: String,
         required: true
     },
+    data: {
+        type: Object,
+        required: true
+    },
     methodMap: {
-        type: {},
+        type: Object,
         required: true
     }
 });
 
 const form = ref({
+    TaskID: "",
     Topic: "",
     Protocol: "",
     Domain: "",
@@ -159,10 +178,27 @@ const required = ref({
     Path: "",
     Method: "",
     Execute: "",
-})
+});
 
-const addArgs = ref([])
-const addHeaders = ref([])
+const addArgs = ref([]);
+const addHeaders = ref([]);
+
+// 初始化表單
+const initializeForm = () => {
+    form.value = { ...props.data };
+    form.value.TaskID = props.data.ID;
+    addArgs.value = props.data.Args;
+    addHeaders.value = props.data.Headers;
+};
+
+onMounted(() => {
+    // 初始化表单数据
+    initializeForm();
+
+    // 監聽 modal 打開事件，重新初始化表單
+    const modalElement = document.getElementById('TaskViewModelUpdate');
+    modalElement.addEventListener('show.bs.modal', initializeForm);
+});
 
 const handleAdd = (type) => {
     switch (type) {
@@ -187,12 +223,12 @@ const handleRemove = (type, index) => {
 };
 
 const validateForm = () => {
-    required.value.Topic = form.value.Topic ? '' : t("TaskView.CreateProps.Required");
-    required.value.Protocol = form.value.Protocol ? '' : t("TaskView.CreateProps.Required");
-    required.value.Domain = form.value.Domain ? '' : t("TaskView.CreateProps.Required");
-    required.value.Path = form.value.Path ? '' : t("TaskView.CreateProps.Required");
-    required.value.Method = form.value.Method ? '' : t("TaskView.CreateProps.Required");
-    required.value.Execute = form.value.Execute ? '' : t("TaskView.CreateProps.Required");
+    required.value.Topic = form.value.Topic ? '' : t("TaskView.UpdateProps.Required");
+    required.value.Protocol = form.value.Protocol ? '' : t("TaskView.UpdateProps.Required");
+    required.value.Domain = form.value.Domain ? '' : t("TaskView.UpdateProps.Required");
+    required.value.Path = form.value.Path ? '' : t("TaskView.UpdateProps.Required");
+    required.value.Method = form.value.Method ? '' : t("TaskView.UpdateProps.Required");
+    required.value.Execute = form.value.Execute ? '' : t("TaskView.UpdateProps.Required");
     return !required.value.Topic && !required.value.Protocol && !required.value.Domain && !required.value.Path && !required.value.Method && !required.value.Execute;
 };
 
@@ -218,7 +254,7 @@ const handleSubmit = () => {
     }, {});
 
     emit('submit', form.value);
-}
+};
 
 const handleClose = () => {
     form.value = {
@@ -232,7 +268,7 @@ const handleClose = () => {
         Headers: {},
         Execute: "",
         Remark: ""
-    }
+    };
     required.value = {
         Topic: "",
         Protocol: "",
@@ -240,12 +276,13 @@ const handleClose = () => {
         Path: "",
         Method: "",
         Execute: "",
-    }
-    addArgs.value = []
-    addHeaders.value = []
-}
+    };
+    addArgs.value = [];
+    addHeaders.value = [];
+};
 
 </script>
+
 
 <style scoped>
 input {
@@ -272,15 +309,9 @@ select {
 }
 
 .form-group {
-    flex: 1 1 33%;
+    flex: 1 1 25%;
     min-width: 200px;
     margin-bottom: 5px;
-}
-
-.add-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
 }
 
 .add-item {
@@ -295,15 +326,5 @@ select {
     flex: 1 1 50%;
     margin-right: 10px;
     margin-bottom: 5px;
-}
-
-.form-group button {
-    margin-bottom: 5px;
-    margin-left: 5px;
-}
-
-.add-item button {
-    margin-bottom: 5px;
-    margin-right: 15px;
 }
 </style>

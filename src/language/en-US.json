@@ -77,6 +77,34 @@
       },
       "Required": "Required"
     },
+    "UpdateProps": {
+      "Title": "Update Task",
+      "Topic": "Topic",
+      "Protocol": "Protocol",
+      "Domain": "Domain",
+      "Path": "Path",
+      "Port": "Port",
+      "Method": "Method",
+      "Select": "Please Select",
+      "Args": {
+        "Lable": "Args",
+        "Field": "Field",
+        "Value": "Value"
+      },
+      "Headers": {
+        "Lable": "Headers",
+        "Field": "Field",
+        "Value": "Value"
+      },
+      "Execute": "Execute Time",
+      "Remark": "Remark",
+      "Btn": {
+        "Submit": "Submit",
+        "Close": "Close"
+      },
+      "Required": "Required",
+      "CantUpdate":"Already Executed And Cannot Be Update"
+    },
     "DetailProps": {
       "Title": "Task Detail",
       "Topic": "Topic",
